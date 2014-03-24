@@ -1,11 +1,11 @@
 package swag.core.instances {
 	
+	import flash.utils.getQualifiedClassName;
+	import flash.utils.getQualifiedSuperclassName;
+	
 	import swag.core.SwagDataTools;
 	import swag.events.SwagEvent;
-	import swag.interfaces.core.instances.ISwagEventListener;
-	import swag.interfaces.events.ISwagEvent;	
-	import flash.utils.getQualifiedSuperclassName;
-	import flash.utils.getQualifiedClassName;
+	import swag.interfaces.events.ISwagEvent;
 	/**
 	 * @private 
 	 * 
@@ -192,7 +192,7 @@ package swag.core.instances {
 			event.source=source;			
 			if (this.methodParameters==null) {					
 				try {
-					this.method(event);
+					_eventMethod(event);
 					return (true);
 				} catch (e:ArgumentError) {
 					trace (e);	
@@ -206,7 +206,7 @@ package swag.core.instances {
 			}//if
 			if (this.methodParameters.length==0) {				
 				try {
-					this.method();
+					_eventMethod();
 					return (true);
 				} catch (e:ArgumentError) {
 					trace (e);	
@@ -221,7 +221,7 @@ package swag.core.instances {
 			if ((this.methodParameters[0] is ISwagEvent) || (this.methodParameters[0] is SwagEvent) 
 				||(getQualifiedSuperclassName(event) == getQualifiedClassName(SwagEvent)) ) {				
 				try {					
-					this.method(event);
+					_eventMethod(event);
 					return (true);
 				} catch (e:ArgumentError) {
 					trace (e);	
@@ -247,7 +247,7 @@ package swag.core.instances {
 				} else {
 					try {	
 						trace ("Now sending event with source ref="+event.source);
-						this.method(event);
+						_eventMethod(event);
 						return (true);
 					} catch (e:ArgumentError) {
 						trace (e);	

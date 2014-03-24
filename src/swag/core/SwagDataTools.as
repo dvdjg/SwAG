@@ -3,7 +3,6 @@ package swag.core {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 	import flash.display.Loader;
 	import flash.display.PixelSnapping;
 	import flash.events.Event;
@@ -15,7 +14,6 @@ package swag.core {
 	import flash.xml.XMLDocument;
 	import flash.xml.XMLNode;
 	
-	import swag.core.SwagDispatcher;
 	import swag.interfaces.core.ISwagDataTools;
 	
 	/**

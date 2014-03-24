@@ -1,6 +1,5 @@
 package swag.network {
 		
-	import flash.utils.ByteArray;
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;
 	

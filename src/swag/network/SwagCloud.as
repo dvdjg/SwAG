@@ -1,7 +1,5 @@
 package swag.network {
 	
-	import flash.display.DisplayObjectContainer;
-	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	import flash.events.StatusEvent;
 	import flash.media.Camera;
@@ -14,14 +12,13 @@ package swag.network {
 	import flash.net.NetStream;
 	import flash.system.Security;
 	import flash.system.SecurityPanel;
-	import flash.utils.ByteArray;	
+	import flash.utils.ByteArray;
+	
 	import swag.core.SwagDataTools;
 	import swag.core.SwagDispatcher;
 	import swag.core.SwagSystem;
 	import swag.events.SwagCloudEvent;
 	import swag.interfaces.network.ISwagCloud;
-	import swag.network.SwagCloudData;
-	import swag.network.SwagCloudShare;
 	
 	/**
 	 * Provides methods and properties for the RTMFP-based Peer-To-Peer service available in Flash player 10.1 and Adobe's RTMFP Rendezvous service (p2p.rtmfp.net).
