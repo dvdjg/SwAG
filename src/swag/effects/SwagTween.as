@@ -17,7 +17,7 @@ package swag.effects {
 	 * @author Patrick Bay
 	 * 
 	 * @see fl.transitions.Tween
-	 * 
+	 * @note: This class was deleted by its author. It is recovered from an older repository.
 	 */
 	public class SwagTween implements ISwagTween {		
 		

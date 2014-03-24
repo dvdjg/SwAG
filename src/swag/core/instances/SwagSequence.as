@@ -1,3 +1,5 @@
+// Note: This file was deleted by its author. It is recovered from an older repository
+
 package swag.core.instances {
 	
 	import flash.events.TimerEvent;
@@ -18,7 +20,7 @@ package swag.core.instances {
 	 * @author Patrick Bay
 	 * 
 	 * @see swag.core.SwagSequencer
-	 * 
+	 * @note: This class was deleted by its author. It is recovered from an older repository.
 	 */
 	public class SwagSequence implements ISwagSequence {
 		

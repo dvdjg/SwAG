@@ -1,3 +1,5 @@
+// Note: This file was deleted by its author. It is recovered from an older repository
+
 package swag.core {
 	
 	/**
@@ -11,7 +13,7 @@ package swag.core {
 	 * @author Patrick Bay
 	 * 
 	 * @see swag.core.instances.SwagSequence
-	 * 
+	 * @note: This class was deleted by its author. It is recovered from an older repository.
 	 */
 	public class SwagSequencer	{
 		

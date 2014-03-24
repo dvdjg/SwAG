@@ -1,3 +1,5 @@
+// Note: This file was deleted by its author. It is recovered from an older repository
+
 package swag.core.instances {
 	
 	import swag.events.SwagErrorEvent;
@@ -11,6 +13,7 @@ package swag.core.instances {
 	 * other number of functions or analysis may be applied without altering the original method.</p>
 	 * 
 	 * @author Patrick Bay
+	 * @note: This class was deleted by its author. It is recovered from an older repository.
 	 */
 	public class SwagProxy	{
 		

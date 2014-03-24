@@ -2,7 +2,8 @@ package swag.interfaces.core.instances {
 	
 	/**
 	 * @private
-	 * @author Patrick Bay	 
+	 * @author Patrick Bay
+	 * @note: This interface was deleted by its author. It is recovered from an older repository.
 	 */
 	public interface ISwagSequence	{
 		
