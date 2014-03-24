@@ -14,7 +14,29 @@ package swag.core {
 	 * 
 	 * @author Patrick Bay
 	 * 
-	 * @see swag.core.instances.SwagEventListener	  
+	 * @see swag.core.instances.SwagEventListener
+	 * 
+	 * The MIT License (MIT)
+	 * 
+	 * Copyright (c) 2014 Patrick Bay
+	 * 
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 * 
+	 * The above copyright notice and this permission notice shall be included in
+	 * all copies or substantial portions of the Software.
+	 * 
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	 * THE SOFTWARE.
 	 */
 	public class SwagDispatcher implements ISwagDispatcher {		
 		
@@ -43,12 +65,15 @@ package swag.core {
 				return (false);
 			}//if
 			var listenerCount:uint=listeners.length;
-			var dispatchSent:Boolean=false;
+			var dispatchSent:Boolean=false;	
 			//Prefetch the listener count in case new ones are added or removed while dispatching
 			for (var count:uint=0; count<listenerCount; count++) {
-				var currentListener:SwagEventListener=_listeners[count] as SwagEventListener;	
-				if ((eventObj.type==currentListener.type) && sourcesMatch(source, currentListener.source)) {
-					trace ("Dispatching event from source: "+source);
+				//Array may be manipulated while dispatching so do this check every time.
+				if (listeners.length<=count) {
+					return (dispatchSent);
+				}//if					
+				var currentListener:SwagEventListener=listeners[count] as SwagEventListener;				
+				if ((eventObj.type==currentListener.type) && sourcesMatch(source, currentListener.source)) {						
 					if (currentListener.invoke(eventObj, source)==false) {
 						removeEventListener(currentListener.type, currentListener.method);
 					} else {

@@ -1,10 +1,8 @@
-package swag.interfaces.core.instances {
+package swag.interfaces.events {	
 	
 	/**
 	 * 
-	 * SwagDate class interface.
-	 * 
-	 * @author Patrick Bay	 
+	 * SwagMovieClipEvent class interface.
 	 * 
 	 * The MIT License (MIT)
 	 * 
@@ -28,7 +26,7 @@ package swag.interfaces.core.instances {
 	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	 * THE SOFTWARE.
 	 */
-	public interface ISwagDate {	
-	}//ISwagDate interface
+	public interface ISwagMovieClipEvent	{		
+	}//ISwagMovieClipEvent interface
 	
 }//package

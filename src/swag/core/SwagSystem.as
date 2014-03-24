@@ -1,16 +1,21 @@
 package swag.core {
 	
 	import flash.events.TimerEvent;
+	import flash.media.Camera;
+	import flash.media.scanHardware;
 	import flash.system.ApplicationDomain;
 	import flash.system.Capabilities;
 	import flash.system.System;
 	import flash.utils.Timer;
+	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
+	import flash.utils.getQualifiedClassName;
 	
 	import swag.core.SwagDataTools;
 	import swag.core.SwagDispatcher;
 	import swag.events.SwagEvent;
 	import swag.interfaces.core.ISwagSystem;	
+	
 	/**
 	 * Provides or collects a variety of methods and properties that can be used by the developer to deeply inspect and (sometimes)
 	 * update the host system settings (the Flash / AIR version, the operating system, browser, etc.), or various core ActionScript 
@@ -18,15 +23,51 @@ package swag.core {
 	 * 
 	 * @author Patrick Bay
 	 * 
-	 */
+	 * The MIT License (MIT)
+	 * 
+	 * Copyright (c) 2014 Patrick Bay
+	 * 
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 * 
+	 * The above copyright notice and this permission notice shall be included in
+	 * all copies or substantial portions of the Software.
+	 * 
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	 * THE SOFTWARE.
+	 *
+	*/
 	public final class SwagSystem extends SwagDispatcher implements ISwagSystem	{
 		
-		private static const _mobileOSes:Array=["Windows SmartPhone", "Windows PocketPC", "Windows CEPC", "Windows Mobile", "iPhone"];
+		private static const _mobileOSes:Array=["Windows SmartPhone", "Windows PocketPC", "Windows CEPC", "Windows Mobile", "iPhone", "AND"];
+		private static const _camResolutions:Array=[
+			{width:40,height:30},
+			{width:80,height:60},
+			{width:160,height:120},
+			{width:320,height:240},
+			{width:640,height:480},
+			{width:720,height:540},
+			{width:960,height:720},
+			{width:1280,height:960},
+			{width:1920,weight:1440},
+			{width:2880,height:2160},
+			{width:4320,height:3240},					   
+		];
 		//Setters (where appropriate) & getters are provided for the following properties.
 		private static var _initialized:Boolean=false;		
 		private static var _settings:Object=new Object();
 		private static var _onExistsTimer:Timer=null;
 		private static var _onExistsWatches:Array=new Array();
+		
 							
 		/**
 		 * 
@@ -67,6 +108,33 @@ package swag.core {
 			}//if
 			return (_settings);
 		}//get settings
+		
+		/**
+		 * Forces a setting in the <code>setting</code> object to the desired value. 
+		 *  
+		 * @param settingName The name of the system setting (e.g. "isAIR"), to set.
+		 * @param data The data to assign to the setting.
+		 * 
+		 * @return <em>True</em> if the setting could be assigned (the setting exists. <em>False</em> is returned if the setting could not 
+		 * be assigned for some reason. 
+		 * 
+		 */
+		public static function forceSetting(settingName:String=null, data:*=null):Boolean {
+			if ((settingName=="") || (settingName==null)) {
+				return (false);
+			}//if
+			for (var item:* in settings) {
+				if (item==settingName) {
+					try {
+						settings[item]=data;
+					} catch (e:*) {
+						return (false);
+					}//catch
+					return (true);
+				}//if
+			}//for
+			return (false);
+		}//forceSetting
 		
 		/**
 		 * 
@@ -147,6 +215,86 @@ package swag.core {
 		}//getDefinition
 		
 		/**
+		 * Returns the class name (without package), of the supplied object reference.
+		 *  
+		 * @param objectRef The object to retrieve the class name for.
+		 * 
+		 * @return The class name (without packages), of the supplied object, or <em>null</em> if it couldn't
+		 * be determined. 
+		 * 
+		 */
+		public static function getClassName(objectRef:*):String {
+			if (objectRef==null) {
+				return (null);
+			}//if
+			var fullClassName:String=getQualifiedClassName(objectRef);
+			try {
+				var className:String=new String(fullClassName.split("::")[1]);
+				return (className);
+			} catch (e:*) {
+				return (null);
+			}//catch
+			return (null);
+		}//getClassName
+		
+		/**
+		 * Returns a list of all implemented interfaces of a target object.
+		 *  
+		 * @param objectref The object to evaluate for implemented interfaces.
+		 * 
+		 * @return Ann array containing the fully qualified interface names (including packages),
+		 * in standard dot notation, of the specified object. <em>Null</em> is returned if a list
+		 * of interfaces can't be determined. 
+		 * 
+		 */
+		public static function getInterfaces(objectRef:*):Array {
+			if (objectRef==null) {
+				return (null);
+			}//if
+			try {
+				var typeDef:XML=describeType(objectRef);
+				var interfaceNodes:XMLList=typeDef.implementsInterface as XMLList;
+				var returnList:Array=new Array();
+				for (var count:uint=0; count<interfaceNodes.length(); count++) {
+					var currentNode:XML=interfaceNodes[count] as XML;
+					var typeAttr:String=new String(currentNode.@type);
+					typeAttr=typeAttr.split("::").join(".");
+					returnList.push(typeAttr);
+				}//for
+				return (returnList);
+			} catch (e:*) {
+				return (null);
+			}//catch
+			return (null);
+		}//getInterfaces
+		
+		/**
+		 * Returns <em>true</em> if the specified object implements the specified interface,
+		 * or <em>false</em> otherwise.
+		 *  
+		 * @param objectRef The object to evaluate.
+		 * @param interfaceName The fully qualified interface name (including package), in dot notation,
+		 * to evaluate.
+		 * 
+		 * @return <em>True</em> if the specified object implements the specified interface, <em>false</em>
+		 * otherwise, or if the object is <em>null</em>.
+		 * 
+		 */
+		public static function implementsInterface(objectRef:*, interfaceName:String):Boolean {
+			var interfaceList:Array=getInterfaces(objectRef);
+			if (interfaceList==null) {
+				return (false);
+			}//if
+			for (var count:uint=0; count<interfaceList.length; count++) {
+				var currentInterface:String=interfaceList[count] as String;
+				if (currentInterface==interfaceName) {
+					return (true);
+				}//if
+			}//for
+			return (false);
+		}//implementsInterface
+		
+		/**
 		 * Begins monitoring for the existence of a property within a specific object, and invokes a method
 		 * when that property becomes available (is not <em>undefined</em> and, optionally, is not <em>null</em>).
 		 * <p><em>Null</em> objects are considered to exist and will trigger the <code>callbackMethod</code> unless
@@ -185,6 +333,63 @@ package swag.core {
 			}//if
 			return (true);
 		}//onExists
+		
+		/**
+		 * Returns an array of objects containing available "width", "height", and "fps" values for a specific camera (the "fps" value
+		 * represents the highest possible frames per setting for that resolution).
+		 * <p>The returned data includes only the specific modes available for the camera (useful for populating combo boxes, for example).</p>
+		 *  
+		 * @param camIndex The string numeric index of the camera to retrieve (same as passed to <code>Camera.getCamera</code> method).
+		 * 		 
+		 * @return An array of objects containing the properties "width", "height" and "fps". These values represent valid modes
+		 * for the specified camera device. A <em>null</em> is returned if the camera index is invalid, or cameras are not supported. 
+		 * 
+		 */
+		public static function getCameraResolutions(camIndex:String):Array {
+			if (!Camera.isSupported) {
+				return (null);
+			}//if
+			if ((camIndex==null) || (camIndex=="")) {
+				return (null);
+			}//if
+			scanHardware();  
+			var returnArray:Array=new Array();
+			var cameras:Array=Camera.names;
+			var currentCam:Camera=Camera.getCamera(camIndex);
+			if (currentCam!=null) {
+				for (var count:uint=0; count<_camResolutions.length; count++) {
+					var testRes:Object=_camResolutions[count];
+					//Use a very high FPS, detection will clip it at highest available value.
+					currentCam.setMode(testRes.width, testRes.height, 1024, true);
+					//Sometimes this is reported. Clearly not correct...
+					if ((currentCam.width>1) && (currentCam.height>1)) {
+						if (!cameraModeInArray(currentCam.width, currentCam.height, returnArray)) {
+							var infoObject:Object=new Object();
+							infoObject.width=currentCam.width;
+							infoObject.height=currentCam.height;
+							infoObject.fps=currentCam.fps;
+							returnArray.push(infoObject);
+						}//if
+					}//if
+				}//for
+			} else {
+				return (null);
+			}//else
+			return (returnArray);
+		}//getCameraResolutions		
+		
+		/**
+		 * @private 		 		 
+		 */
+		private static function cameraModeInArray(modeWidth:int, modeHeight:int, arrayObj:Array):Boolean {
+			for (var count:uint=0; count<arrayObj.length; count++) {
+				var currentObject:Object=arrayObj[count];
+				if ((currentObject.width==modeWidth) && (currentObject.height==modeHeight)) {
+					return (true);
+				}//if
+			}//for
+			return (false);
+		}//cameraModeInArray
 				
 		/**
 		 * @private 		 		 
@@ -306,7 +511,24 @@ package swag.core {
 			_settings.localFileReadDisable=Capabilities.localFileReadDisable;
 			_settings.manufacturer=Capabilities.manufacturer;
 			_settings.maxLevelIDC=Capabilities.maxLevelIDC;
-			_settings.os=Capabilities.os;
+			_settings.os = Capabilities.os;
+			var environStr:String = new String(_settings.os);
+			environStr = environStr.toLowerCase();
+			if (environStr.indexOf("windows")>-1) {
+				_settings.environment = "win";
+			}//if			
+			if (environStr.indexOf("mac os")>-1) {
+				_settings.environment = "macos";
+			}//if
+			if (environStr.indexOf("android")>-1) {
+				_settings.environment = "android";
+			}//if
+			if (environStr.indexOf("linux")>-1) {
+				_settings.environment = "linux";
+			}//if
+			if (environStr.indexOf("iphone")>-1) {
+				_settings.environment = "iphone";
+			}//if			
 			_settings.pixelAspectRatio=Capabilities.pixelAspectRatio;
 			_settings.playerType=Capabilities.playerType;
 			_settings.screenColor=Capabilities.screenColor;
@@ -355,6 +577,13 @@ package swag.core {
 			}//if
 			_settings.isMobile=false;
 			if (SwagDataTools.stringContains(_mobileOSes, Capabilities.os, false)) {
+				_settings.isMobile=true;
+			}//if
+			if (SwagDataTools.stringContains(_mobileOSes, Capabilities.version, false)) {
+				//Detects "AND" (Android)
+				_settings.isMobile=true;
+			}//if
+			if (Capabilities.cpuArchitecture=="ARM") {
 				_settings.isMobile=true;
 			}//if
 			//Push settings from NativeApplication class if AIR is supported...

@@ -4,9 +4,34 @@ package swag.core.instances {
 	import swag.events.SwagEvent;
 	import swag.interfaces.core.instances.ISwagEventListener;
 	import swag.interfaces.events.ISwagEvent;	
+	import flash.utils.getQualifiedSuperclassName;
+	import flash.utils.getQualifiedClassName;
 	/**
 	 * @private 
+	 * 
 	 * @author Patrick Bay 
+	 * 
+	 * The MIT License (MIT)
+	 * 
+	 * Copyright (c) 2014 Patrick Bay
+	 * 
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 * 
+	 * The above copyright notice and this permission notice shall be included in
+	 * all copies or substantial portions of the Software.
+	 * 
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	 * THE SOFTWARE.
 	 */	
 	public final class SwagEventListener	{
 		
@@ -163,9 +188,9 @@ package swag.core.instances {
 		public function invoke(event:ISwagEvent, source:*):Boolean {			
 			if (this.method==null) {
 				return (false);
-			}//if
+			}//if			
 			event.source=source;			
-			if (this.methodParameters==null) {
+			if (this.methodParameters==null) {					
 				try {
 					this.method(event);
 					return (true);
@@ -175,10 +200,11 @@ package swag.core.instances {
 					trace ("   1. Update the listening method to include only a SwagEvent-type object as its first parameter.");
 					trace ("   2. Include a reference to the method's containing object (usually \"this\"), in the third parameter ");
 					trace ("(\"thisRef\"), when calling the SwagDispatcher.addEventListener() method.");
+					trace ("   3. Ensure that the listening method is declared as public (private method parameters can't be detected).");
 					return (false);
 				}//catch
 			}//if
-			if (this.methodParameters.length==0) {
+			if (this.methodParameters.length==0) {				
 				try {
 					this.method();
 					return (true);
@@ -188,10 +214,12 @@ package swag.core.instances {
 					trace ("   1. Update the listening method to include only a SwagEvent-type object as its first parameter.");
 					trace ("   2. Include a reference to the method's containing object (usually \"this\"), in the third parameter ");
 					trace ("(\"thisRef\"), when calling the SwagDispatcher.addEventListener() method.");
+					trace ("   3. Ensure that the listening method is declared as public (private method parameters can't be detected).");
 					return (false);
 				}//catch
 			}//if
-			if ((this.methodParameters[0]==ISwagEvent) || (this.methodParameters[0]==SwagEvent)) {
+			if ((this.methodParameters[0] is ISwagEvent) || (this.methodParameters[0] is SwagEvent) 
+				||(getQualifiedSuperclassName(event) == getQualifiedClassName(SwagEvent)) ) {				
 				try {					
 					this.method(event);
 					return (true);
@@ -201,9 +229,10 @@ package swag.core.instances {
 					trace ("   1. Update the listening method to include only a SwagEvent-type object as its first parameter.");
 					trace ("   2. Include a reference to the method's containing object (usually \"this\"), in the third parameter ");
 					trace ("(\"thisRef\"), when calling the SwagDispatcher.addEventListener() method.");
+					trace ("   3. Ensure that the listening method is declared as public (private method parameters can't be detected).");
 					return (false);
 				}//catch
-			} else {
+			} else {				
 				if (this.sourceContainer!=null) {
 					try {						
 						this.method.apply(this.sourceContainer, this.methodParameterInstances);
@@ -216,7 +245,8 @@ package swag.core.instances {
 						return (false);
 					}//catch
 				} else {
-					try {						
+					try {	
+						trace ("Now sending event with source ref="+event.source);
 						this.method(event);
 						return (true);
 					} catch (e:ArgumentError) {
@@ -225,6 +255,7 @@ package swag.core.instances {
 						trace ("   1. Update the listening method to include only a SwagEvent-type object as its first parameter.");
 						trace ("   2. Include a reference to the method's containing object (usually \"this\"), in the third parameter ");
 						trace ("(\"thisRef\"), when calling the SwagDispatcher.addEventListener() method.");
+						trace ("   3. Ensure that the listening method is declared as public (private method parameters can't be detected).");
 						return (false);
 					}//catch
 				}//else

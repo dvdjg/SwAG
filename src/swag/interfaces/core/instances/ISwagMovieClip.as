@@ -1,10 +1,11 @@
 package swag.interfaces.core.instances {
 	
+	import flash.display.MovieClip;	
 	/**
 	 * 
-	 * SwagDate class interface.
+	 * SwagMovieClip class interface.
 	 * 
-	 * @author Patrick Bay	 
+	 * @author Patrick Bay
 	 * 
 	 * The MIT License (MIT)
 	 * 
@@ -28,7 +29,11 @@ package swag.interfaces.core.instances {
 	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	 * THE SOFTWARE.
 	 */
-	public interface ISwagDate {	
-	}//ISwagDate interface
+	public interface ISwagMovieClip	{
+		
+		function set target(targetSet:MovieClip):void;		
+		function get target():MovieClip;
+		
+	}//ISwagMovieClip interface
 	
 }//package

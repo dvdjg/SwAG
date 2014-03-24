@@ -1,10 +1,10 @@
-package swag.interfaces.core.instances {
+package swag.interfaces.network {
 	
 	/**
 	 * 
-	 * SwagDate class interface.
+	 * SwagCloud class interface.
 	 * 
-	 * @author Patrick Bay	 
+	 * @author Patrick Bay 
 	 * 
 	 * The MIT License (MIT)
 	 * 
@@ -28,7 +28,7 @@ package swag.interfaces.core.instances {
 	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	 * THE SOFTWARE.
 	 */
-	public interface ISwagDate {	
-	}//ISwagDate interface
+	public interface ISwagCloud	{
+	}//ISwagCloud interface
 	
 }//package

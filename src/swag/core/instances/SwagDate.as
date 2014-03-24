@@ -12,6 +12,28 @@ package swag.core.instances {
 	 * @author Patrick Bay
 	 * 
 	 * @see Date.#
+	 * 
+	 * The MIT License (MIT)
+	 * 
+	 * Copyright (c) 2014 Patrick Bay
+	 * 
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 * 
+	 * The above copyright notice and this permission notice shall be included in
+	 * all copies or substantial portions of the Software.
+	 * 
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	 * THE SOFTWARE.
 	 */
 	public class SwagDate implements ISwagDate {
 				
@@ -36,6 +58,12 @@ package swag.core.instances {
 		public function SwagDate(... args) {
 			if (args[0]!=undefined) {
 				if (SwagDataTools.isType(args[0], String, false)) {
+					this._date = new Date(args[0]);	
+				} else if (SwagDataTools.isType(args[0], int, false)) {
+					this._date = new Date(args[0]);
+				} else if (SwagDataTools.isType(args[0], uint, false)) {
+					this._date = new Date(args[0]);	
+				} else if (SwagDataTools.isType(args[0], Number, false)) {
 					this._date = new Date(args[0]);	
 				} else if (SwagDataTools.isType(args[0], SwagDate, false)) {
 					this._date=new Date(SwagDate(args[0]).toString());

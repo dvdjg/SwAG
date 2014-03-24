@@ -2,7 +2,8 @@ package swag.core.instances {
 	
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
-	import flash.utils.getTimer;	
+	import flash.utils.getTimer;
+	
 	import swag.core.SwagDataTools;
 	import swag.core.SwagDispatcher;
 	import swag.events.SwagTimeEvent;
@@ -15,6 +16,28 @@ package swag.core.instances {
 	 * is required.</p>
 	 * 
 	 * @author Patrick Bay
+	 * 
+	 * The MIT License (MIT)
+	 * 
+	 * Copyright (c) 2014 Patrick Bay
+	 * 
+	 * Permission is hereby granted, free of charge, to any person obtaining a copy
+	 * of this software and associated documentation files (the "Software"), to deal
+	 * in the Software without restriction, including without limitation the rights
+	 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	 * copies of the Software, and to permit persons to whom the Software is
+	 * furnished to do so, subject to the following conditions:
+	 * 
+	 * The above copyright notice and this permission notice shall be included in
+	 * all copies or substantial portions of the Software.
+	 * 
+	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	 * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	 * THE SOFTWARE.
 	 * 
 	 */
 	public class SwagTime implements ISwagTime {
@@ -90,12 +113,18 @@ package swag.core.instances {
 				}//if
 				if (sections[3] != undefined) {
 					this._milliSeconds=uint(sections[3]);
-				}//if
-				var totalMS:uint=new uint();
-				totalMS=(this._hours*60*60*1000)+(this._minutes*60*1000)+(this._seconds*1000)+(this._milliSeconds);
-				this._totalMilliSeconds = Math.floor(totalMS);
-				this._elapsedMilliseconds = 0;
-			}//if
+				}//if				
+			} else {
+				var dateObj:Date=new Date();
+				this._hours=dateObj.hours;
+				this._minutes=dateObj.minutes;
+				this._seconds=dateObj.seconds;
+				this._milliSeconds=dateObj.milliseconds;
+			}//else
+			var totalMS:uint=new uint();
+			totalMS=(this._hours*60*60*1000)+(this._minutes*60*1000)+(this._seconds*1000)+(this._milliSeconds);
+			this._totalMilliSeconds = Math.floor(totalMS);
+			this._elapsedMilliseconds = 0;
 		}//constructor
 		
 		/**
@@ -152,6 +181,120 @@ package swag.core.instances {
 			outStr=SwagDataTools.replaceString(outStr, secondString, "S");
 			return (outStr);
 		}//getTimeString
+		
+		/**
+		 * Compares the current <code>SwagTime</code> with another instance and returns the difference
+		 * as a third <code>SwagTime</code> instance. The difference is an absolute value, use
+		 * the <code>isBefore</code> or <code>isAfter</code> methods to determine if the value should be negative.
+		 *   
+		 * @param otherTimeObj Another <code>SwagTime</code> object to compare with the current instance.
+		 * 
+		 * @return The difference between the two time objects as absolute time values. If the supplied time
+		 * object is invalid, <em>null</em> is returned.
+		 * 
+		 */
+		public function compareTimes(otherTimeObj:SwagTime):SwagTime {
+			if (otherTimeObj==null) {
+				return (null);
+			}//if
+			var returnTime:SwagTime=new SwagTime();
+			returnTime.totalHours=Math.abs(this.totalHours-otherTimeObj.totalHours);
+			returnTime.totalMinutes=Math.abs(this.totalMinutes-otherTimeObj.totalMinutes);
+			returnTime.totalSeconds=Math.abs(this.totalSeconds-otherTimeObj.totalSeconds);
+			returnTime.totalMilliseconds=Math.abs(this.totalMilliseconds-otherTimeObj.totalMilliseconds);
+			return (returnTime);
+		}//compareTimes
+		
+		/**
+		 * Compares the current time object against another one and returns <em>true</em> if
+		 * this one is temporally before the other one, otherwise <em>false</em> is returned.
+		 *  
+		 * @param otherTimeObj Another time object to compare this one against.
+		 * 
+		 * @return <em>True</em> if this time object is temporally before the one being compared, 
+		 * otherwise <em>false</em> is returned. If both times are equal, <em>false</em> is returned.
+		 * 
+		 */
+		public function isBefore(otherTimeObj:SwagTime):Boolean {
+			if (otherTimeObj==null) {
+				return (false);
+			}//if
+			if (this.hours<otherTimeObj.hours) {
+				return (true);
+			}//if
+			if ((this.hours==otherTimeObj.hours) && (this.minutes<otherTimeObj.minutes)) {
+				return (true);
+			}//if
+			if ((this.hours==otherTimeObj.hours) && (this.minutes==otherTimeObj.minutes)
+				&& (this.seconds<otherTimeObj.seconds)) {			
+				return (true);
+			}//if
+			if ((this.hours==otherTimeObj.hours) && (this.minutes==otherTimeObj.minutes)
+				&& (this.seconds==otherTimeObj.seconds) && (this.milliseconds<otherTimeObj.milliseconds)) {			
+				return (true);
+			}//if
+			return (false);
+		}//isBefore
+		
+		/**
+		 * Compares the current time object against another one and returns <em>true</em> if
+		 * this one is temporally after the other one, otherwise <em>false</em> is returned.
+		 *  
+		 * @param otherTimeObj Another time object to compare this one against.
+		 * 
+		 * @return <em>True</em> if this time object is temporally after the one being compared, 
+		 * otherwise <em>false</em> is returned. If both times are equal, <em>false</em> is returned.
+		 * 
+		 */
+		public function isAfter(otherTimeObj:SwagTime):Boolean {
+			if (otherTimeObj==null) {
+				return (false);
+			}//if
+			if (this.hours>otherTimeObj.hours) {
+				return (true);
+			}//if
+			if ((this.hours==otherTimeObj.hours) && (this.minutes>otherTimeObj.minutes)) {
+				return (true);
+			}//if
+			if ((this.hours==otherTimeObj.hours) && (this.minutes==otherTimeObj.minutes)
+				&& (this.seconds>otherTimeObj.seconds)) {			
+				return (true);
+			}//if
+			if ((this.hours==otherTimeObj.hours) && (this.minutes==otherTimeObj.minutes)
+				&& (this.seconds==otherTimeObj.seconds) && (this.milliseconds>otherTimeObj.milliseconds)) {			
+				return (true);
+			}//if
+			return (false);
+		}//isAfter
+		
+		/**
+		 * Compares the current time object against another one and returns <em>true</em> if
+		 * this one is temporally the same (same time) as the other one, otherwise <em>false</em> is returned.
+		 *  
+		 * @param otherTimeObj Another time object to compare this one against.
+		 * 
+		 * @return <em>True</em> if this time object is temporally the same as the one being compared, 
+		 * otherwise <em>false</em> is returned.
+		 * 
+		 */
+		public function isSame(otherTimeObj:SwagTime):Boolean {
+			if (otherTimeObj==null) {
+				return (false);
+			}//if
+			if (this.hours!=otherTimeObj.hours) {
+				return (false);
+			}//if
+			if (this.minutes!=otherTimeObj.minutes) {
+				return (false);
+			}//if
+			if (this.seconds!=otherTimeObj.seconds) {
+				return (false);
+			}//if
+			if (this.milliseconds!=otherTimeObj.milliseconds) {
+				return (false);
+			}//if
+			return (true);
+		}//isSame
 		
 		/**
 		 * Starts a countdown timer based on the current time settings of the time object (e.g. hours, minutes, and seconds). 
@@ -717,14 +860,14 @@ package swag.core.instances {
 		}//get elapsedMilliseconds
 		
 		/**
-		 * The string representation of the <code>SwagTime</code> object, in the format "H:M:S.l".
+		 * The string representation of the <code>SwagTime</code> object, in the format "H:M:S:l".
 		 * Refer to the <code>getTimeString</code> method for the format of this ouput.
 		 *  
-		 * @return The string representation of the <code>SwagTime</code> object, in the format "H:M:S.l".
+		 * @return The string representation of the <code>SwagTime</code> object, in the format "H:M:S:l".
 		 * 
 		 */
 		public function toString():String {
-			var returnString:String=this.getTimeString("H:M:S.l");
+			var returnString:String=this.getTimeString("H:M:S:l");
 			return (returnString);
 		}//toString
 		

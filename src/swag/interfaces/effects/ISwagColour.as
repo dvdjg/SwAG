@@ -1,10 +1,10 @@
-package swag.interfaces.core.instances {
+package swag.interfaces.effects {
 	
 	/**
 	 * 
-	 * SwagDate class interface.
+	 * SwagColour class interface.
 	 * 
-	 * @author Patrick Bay	 
+	 * @author Patrick Bay
 	 * 
 	 * The MIT License (MIT)
 	 * 
@@ -27,8 +27,18 @@ package swag.interfaces.core.instances {
 	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	 * THE SOFTWARE.
+	 * 
 	 */
-	public interface ISwagDate {	
-	}//ISwagDate interface
+	public interface ISwagColour {
+		
+		function set red(redSet:*):void;		
+		function get red():uint;		
+		function set green(greenSet:*):void;		
+		function get green():uint;		
+		function set blue(greenSet:*):void;		
+		function get blue():uint;		
+		function get RGB():uint;
+		
+	}//ISwagColour interface
 	
 }//package

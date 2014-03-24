@@ -1,10 +1,10 @@
-package swag.interfaces.core.instances {
+package swag.events {
+	
+	import swag.interfaces.events.ISwagMovieClipEvent;
 	
 	/**
 	 * 
-	 * SwagDate class interface.
-	 * 
-	 * @author Patrick Bay	 
+	 * Event object dispatched from SwagMovieClip instances via the SwagDispatcher.
 	 * 
 	 * The MIT License (MIT)
 	 * 
@@ -27,8 +27,27 @@ package swag.interfaces.core.instances {
 	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	 * THE SOFTWARE.
-	 */
-	public interface ISwagDate {	
-	}//ISwagDate interface
+	 */	
+	public class SwagMovieClipEvent extends SwagEvent implements ISwagMovieClipEvent	{
+		
+		/**
+		 * Dispatched when a playback operation of any kind is started on the associated movie clip.
+		 */
+		public static const START:String="SwagEvent.SwagMovieClipEvent.START";
+		/**
+		 * Dispatched when a playback operation of any kind is completed on the associated movie clip.
+		 */
+		public static const END:String="SwagEvent.SwagMovieClipEvent.END";
+		/**
+		 * Dispatched when a playback advances on the associated movie clip.
+		 */
+		public static const FRAME:String="SwagEvent.SwagMovieClipEvent.FRAME";
+		
+		
+		public function SwagMovieClipEvent(eventType:String=null)	{
+			super(eventType);
+		}//constructor
+		
+	}//SwagMovieClipEvent class
 	
 }//package

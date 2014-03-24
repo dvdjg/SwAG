@@ -1,10 +1,10 @@
-package swag.interfaces.core.instances {
+package swag.interfaces.events {
 	
 	/**
 	 * 
-	 * SwagDate class interface.
+	 * SwagCloudEvent class interface.
 	 * 
-	 * @author Patrick Bay	 
+	 * @author Patrick Bay 
 	 * 
 	 * The MIT License (MIT)
 	 * 
@@ -27,8 +27,9 @@ package swag.interfaces.core.instances {
 	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	 * THE SOFTWARE.
-	 */
-	public interface ISwagDate {	
-	}//ISwagDate interface
-	
-}//package
+	 */	
+	public interface ISwagCloudEvent {			
+												
+	}//ISwagCloudEvent interface
+		
+}//package	
