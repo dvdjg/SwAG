@@ -1,4 +1,4 @@
-package swag.core {	
+package swag.core {
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -51,19 +51,19 @@ package swag.core {
 		
 		/**
 		 * Contains the range of all numeric ASCII characters that can be used with various string operations. 
-		 */		
+		 */
 		public static const NUMBERS_RANGE:String="0123456789";
 		/**
 		 * Contains the range of all lowercase ASCII characters that can be used with various string operations. 
-		 */		
+		 */
 		public static const LOWERCASE_RANGE:String="abcdefghijklmnopqrstuvwxyz";
 		/**
 		 * Contains the range of all uppercase ASCII characters that can be used with various string operations. 
-		 */		
+		 */
 		public static const UPPERCASE_RANGE:String="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		/**
 		 * Contains the range of all puncuation ASCII characters that can be used with various string operations. 
-		 */		
+		 */
 		public static const PUNCTUATION_RANGE:String="~`!@#$%^&*()+-={}[]|:\";'<>,.?";
 		
 		/**
@@ -153,10 +153,10 @@ package swag.core {
 		 */
 		public static function isXML(... args):Boolean {
 			try {
-				if (args == null) {				
+				if (args == null) {
 					return (false);
 				}//if
-				if (args[0] == undefined) {				
+				if (args[0] == undefined) {
 					return (false);
 				}//if
 			} catch (e:*) {
@@ -164,16 +164,16 @@ package swag.core {
 			}//catch
 			if ((args[0]==String) && (args[1]==true)){
 				var localString:String=new String(args[0]);
-				try {					
+				try {
 					var testXML:XML=new XML(localString);
 					return (true);
-				} catch (e:TypeError) {					
+				} catch (e:TypeError) {
 					return (false);
-				}//catch				
+				}//catch
 			}//if
-			if ((args[0] is XML) || (args[0] is XMLList) || (args[0] is XMLDocument) || (args[0] is XMLNode)) {				
+			if ((args[0] is XML) || (args[0] is XMLList) || (args[0] is XMLDocument) || (args[0] is XMLNode)) {
 				return (true);
-			}//if			
+			}//if
 			return (false);
 		}//isXML
 		
@@ -195,7 +195,7 @@ package swag.core {
 		public static function stringContains(sourceString:*, searchString:String, caseSensitive:Boolean=true):Boolean {
 			if ((sourceString==null) || (searchString==null)) {
 				return (false);
-			}//if			
+			}//if
 			if (sourceString is String) {
 				var localSourceString:String=new String(sourceString);
 				var localSearchString:String=new String(searchString);
@@ -210,13 +210,13 @@ package swag.core {
 				}//else
 			} else if (sourceString is Array) {
 				localSearchString=new String(searchString);
-				if (!caseSensitive) {					
+				if (!caseSensitive) {
 					localSearchString=localSearchString.toLowerCase();
 				}//if
 				for (var count:uint=0; count<sourceString.length; count++) {
 					localSourceString=new String(sourceString[count] as String);
 					if (!caseSensitive) {
-						localSourceString=localSourceString.toLowerCase();						
+						localSourceString=localSourceString.toLowerCase();
 					}//if
 					if (localSourceString.indexOf(localSearchString)>-1) {
 						return (true);
@@ -268,10 +268,10 @@ package swag.core {
 			}//if
 			if (exclusions is String) {
 				exclusionsStr = exclusions;
-			}//if			
+			}//if
 			for (var count:int = inputString.length; count >= 0; count--) {
-				var currentChar:String = inputString.substr(count, 1);				
-				if (exclusionsStr.indexOf(currentChar) < 0) {					
+				var currentChar:String = inputString.substr(count, 1);
+				if (exclusionsStr.indexOf(currentChar) < 0) {
 					return (currentChar);
 				}//if
 			}//for
@@ -311,7 +311,7 @@ package swag.core {
 			if (stripChars==Array) {
 				for (var count:uint=0; count<stripChars.length; count++) {
 					localStripChars.concat(String(stripChars[count] as String));
-				}//for	
+				}//for
 			} else if (stripChars==String) {
 				localStripChars=new String(stripChars);
 			} else {
@@ -324,9 +324,9 @@ package swag.core {
 			var returnString:String=new String();
 			var leadStripped:Boolean=false;
 			for (var charCount:Number=0; charCount<localInputString.length; charCount++) {
-				var currentChar:String=localInputString.charAt(charCount);				
-				if ((localStripChars.indexOf(currentChar)<0) || (leadStripped)) {					
-					returnString=returnString.concat(currentChar);	
+				var currentChar:String=localInputString.charAt(charCount);
+				if ((localStripChars.indexOf(currentChar)<0) || (leadStripped)) {
+					returnString=returnString.concat(currentChar);
 					leadStripped=true;
 				}//if
 			}//for
@@ -366,7 +366,7 @@ package swag.core {
 			if (stripChars==Array) {
 				for (var count:uint=0; count<stripChars.length; count++) {
 					localStripChars.concat(String(stripChars[count] as String));
-				}//for	
+				}//for
 			} else if (stripChars==String) {
 				localStripChars=new String(stripChars);
 			} else {
@@ -381,7 +381,7 @@ package swag.core {
 			for (var charCount:Number=(localInputString.length-1); charCount>=0; charCount--) {
 				var currentChar:String=localInputString.charAt(charCount);
 				if ((localStripChars.indexOf(currentChar)<0) || (trailStripped)) {
-					returnString=currentChar+returnString;	
+					returnString=currentChar+returnString;
 					trailStripped=true;
 				}//if
 			}//for
@@ -449,7 +449,7 @@ package swag.core {
 			if (stripChars is Array) {
 				for (var count:uint=0; count<stripChars.length; count++) {
 					localStripChars.concat(String(stripChars[count] as String));
-				}//for	
+				}//for
 			} else if (stripChars is String) {
 				localStripChars=new String(stripChars);
 			} else {
@@ -459,11 +459,11 @@ package swag.core {
 				return (inputString);
 			}//if
 			var localInputString:String=new String(inputString);
-			var returnString:String=new String();			
+			var returnString:String=new String();
 			for (var charCount:Number=(localInputString.length-1); charCount>=0; charCount--) {
 				var currentChar:String=localInputString.charAt(charCount);
 				if (localStripChars.indexOf(currentChar)<0) {
-					returnString=currentChar+returnString;						
+					returnString=currentChar+returnString;
 				}//if
 			}//for
 			return (returnString);
@@ -520,19 +520,19 @@ package swag.core {
 		public static function getStringBefore(sourceString:String, patternString:String, includePattern:Boolean=false, caseSensitive:Boolean=false):String {
 			if (sourceString==null) {
 				return (null);
-			}//if			
+			}//if
 			var localSourceString:String=new String(sourceString);
 			if ((patternString==null) || (patternString=="") || (sourceString=="")) {
 				return (localSourceString);
 			}//if
 			var localLCSourceString:String=localSourceString.toLowerCase();
-			var localPatternString:String=new String(patternString);			
+			var localPatternString:String=new String(patternString);
 			var localLCPatternString:String=localPatternString.toLowerCase();
 			var returnString:String=new String();;
 			if (caseSensitive==true) {
-				var patternIndex:int=localSourceString.indexOf(localPatternString);				
+				var patternIndex:int=localSourceString.indexOf(localPatternString);
 			} else {
-				patternIndex=localLCSourceString.indexOf(localLCPatternString);			
+				patternIndex=localLCSourceString.indexOf(localLCPatternString);
 			}//else
 			if (patternIndex>0) {
 				if (includePattern) {
@@ -570,22 +570,22 @@ package swag.core {
 		public static function getStringAfter(sourceString:String, patternString:String, includePattern:Boolean=false, caseSensitive:Boolean=false):String {
 			if (sourceString==null) {
 				return (null);
-			}//if			
+			}//if
 			var localSourceString:String=new String(sourceString);
 			if ((patternString==null) || (patternString=="") || (sourceString=="")) {
 				return (localSourceString);
 			}//if
 			var localLCSourceString:String=localSourceString.toLowerCase();
-			var localPatternString:String=new String(patternString);			
+			var localPatternString:String=new String(patternString);
 			var localLCPatternString:String=localPatternString.toLowerCase();
 			var returnString:String=new String();;
 			if (caseSensitive==true) {
-				var patternIndex:int=localSourceString.lastIndexOf(localPatternString);				
+				var patternIndex:int=localSourceString.lastIndexOf(localPatternString);
 			} else {
-				patternIndex=localLCSourceString.lastIndexOf(localLCPatternString);			
-			}//else		
+				patternIndex=localLCSourceString.lastIndexOf(localLCPatternString);
+			}//else
 			patternIndex+=1;
-			if (patternIndex>0) {				
+			if (patternIndex>0) {
 				if (includePattern) {
 					patternIndex-=localPatternString.length;
 					returnString=localSourceString.substr(patternIndex);
@@ -624,7 +624,7 @@ package swag.core {
 		 * 
 		 * @see flash.system.Capabilities#version
 		 */
-		public static function parseVersionString(versionString:String, separator:String="."):Object {			
+		public static function parseVersionString(versionString:String, separator:String="."):Object {
 			var returnObject:Object=new Object();
 			returnObject.major=new int(-1);
 			returnObject.minor=new int(-1);
@@ -659,8 +659,8 @@ package swag.core {
 				var finalPart:String=new String(versionParts[3] as String);
 				var stripCharacters:String=SwagDataTools.LOWERCASE_RANGE+SwagDataTools.UPPERCASE_RANGE
 					+SwagDataTools.PUNCTUATION_RANGE+SwagDataTools.SEPARATOR_RANGE;
-				returnObject.internalBuild=int(stripChars(finalPart, stripCharacters));						
-			}//if			
+				returnObject.internalBuild=int(stripChars(finalPart, stripCharacters));
+			}//if
 			if (stringContains(localVersionString, "a", false)) {
 				returnObject.alpha=true;
 			} else if (stringContains(localVersionString, "b", false)) {
@@ -713,19 +713,19 @@ package swag.core {
 			}//if
 			if (!hasData(line1.x2)) {
 				line1.x2=0;
-			}//if			
+			}//if
 			if (!hasData(line1.y1)) {
 				line1.y1=0;
 			}//if
 			if (!hasData(line1.y2)) {
 				line1.y2=0;
-			}//if			
+			}//if
 			if (!hasData(line2.x1)) {
 				line2.x1=0;
 			}//if
 			if (!hasData(line2.x2)) {
 				line2.x2=0;
-			}//if			
+			}//if
 			if (!hasData(line2.y1)) {
 				line2.y1=0;
 			}//if
@@ -734,9 +734,9 @@ package swag.core {
 			}//if
 			//Adjust to 0,0
 			line1.x2-=line1.x1;
-			line1.y2-=line1.y1;			
+			line1.y2-=line1.y1;
 			line2.x2-=line2.x1;
-			line2.y2-=line2.y1;			
+			line2.y2-=line2.y1;
 			var angle1:Number = Math.atan2(line1.y2, line1.x2);
 			var angle2:Number = Math.atan2(line2.y2, line2.x2);
 			var returnAngle:Number = Math.abs(180*(angle1 - angle2)/Math.PI);
@@ -762,7 +762,7 @@ package swag.core {
 			var returnPoint:Point=new Point();
 			var radianAngle:Number=toRadians(angle);
 			returnPoint.x=xRadius*Math.cos(radianAngle);
-			returnPoint.y=yRadius*Math.sin(radianAngle);			
+			returnPoint.y=yRadius*Math.sin(radianAngle);
 			return (returnPoint);
 		}//getElipseCoords
 		
@@ -785,7 +785,7 @@ package swag.core {
 		 * 
 		 * @internal Conversion from negative numeric values not working correctly!
 		 * 		 
-		 */	
+		 */
 		public static function toHexString(input:*):String {
 			if (isType(input, String, false)) {
 				var localString:String=new String();
@@ -804,8 +804,8 @@ package swag.core {
 					}//else
 				}//for
 				return (outStr);
-			} else if (isType(input, Number, false) || isType(input, int, false) || isType(input, uint, false)) {				
-				outStr=input.toString(16);				
+			} else if (isType(input, Number, false) || isType(input, int, false) || isType(input, uint, false)) {
+				outStr=input.toString(16);
 				//Is this a Flash bug? There is nothing that should be producing this value but sometimes we get this!
 				if (outStr=='-(0000000') {
 					outStr='80000000';
@@ -819,7 +819,7 @@ package swag.core {
 		}//toHexString
 		
 		
-		/**	
+		/**
 		 * Converts a hexadecinal input string to its ordinal representation, either as an ASCII string, or as a native
 		 * numeric type.
 		 * 
@@ -834,7 +834,7 @@ package swag.core {
 		 * @return The plain text or native numeric value of the hexadecimal input string, or <em>null</em> if there was a problem converting it.
 		 * 
 		 * @see #toHexString()		 
-		 */	
+		 */
 		public static function fromHexString(input:String, returnType:Class):* {
 			if (returnType==Number) {
 				var returnNum:Number=new Number();
@@ -852,11 +852,11 @@ package swag.core {
 				var realString:String=new String();
 				realString=String(input);
 				var returnArray:ByteArray=new ByteArray();
-				var tempStr:String=new String();		
+				var tempStr:String=new String();
 				for (var count:Number=0;count<realString.length;count+=2) {
 					tempStr=realString.substr(count,2);
 					tempStr='0x'+tempStr;
-					var uintVal:uint=uint(tempStr);					
+					var uintVal:uint=uint(tempStr);
 					returnArray.writeByte(uintVal);
 				}//for
 				return (returnArray);
@@ -864,11 +864,11 @@ package swag.core {
 				realString=new String();
 				realString=String(input);
 				var outStr:String=new String();
-				tempStr=new String();		
+				tempStr=new String();
 				for (count=0;count<realString.length;count+=2) {
 					tempStr=realString.substr(count,2);
 					tempStr='0x'+tempStr;
-					var numVal:Number=Number(tempStr);			
+					var numVal:Number=Number(tempStr);
 					outStr+=String.fromCharCode(numVal);
 				}//for
 				return (outStr);
@@ -901,9 +901,9 @@ package swag.core {
 			}//if
 			var returnString:String=new String();
 			var currentDigit:String;
-			for (var count:uint=0; count<bits; count++) {						
+			for (var count:uint=0; count<bits; count++) {
 				currentDigit=String((inputNumber & (1 << count)) >>> count);
-				returnString=currentDigit+returnString;				
+				returnString=currentDigit+returnString;
 			}//for
 			return (returnString);
 		}//toBinaryString
@@ -922,19 +922,19 @@ package swag.core {
 		 * @see toBinaryString()
 		 * 
 		 */
-		public static function fromBinaryString(inputString:String, returnType:Class):* {			
-			if ((returnType!=Number) && (returnType!=uint) && (returnType!=int)) {				
+		public static function fromBinaryString(inputString:String, returnType:Class):* {
+			if ((returnType!=Number) && (returnType!=uint) && (returnType!=int)) {
 				return (null);
 			}//else
 			var returnValue:*;
 			var localInputString:String=new String(inputString);
-			localInputString=stripOutsideChars(localInputString, SwagDataTools.SEPARATOR_RANGE);			
+			localInputString=stripOutsideChars(localInputString, SwagDataTools.SEPARATOR_RANGE);
 			if ((localInputString=="") || (localInputString.length==0)) {
 				returnValue=0;
 				return (returnValue);
-			}//if			
+			}//if
 			for (var count:int=0; count<localInputString.length; count++) {
-				var currentChar:String=localInputString.charAt(count);				
+				var currentChar:String=localInputString.charAt(count);
 				if (currentChar=="1") {
 					returnValue=returnValue | (1 << (localInputString.length-count-1));
 				} else if (currentChar=="0") {
@@ -945,14 +945,14 @@ package swag.core {
 				}//else
 			}//for
 			if (returnType==int) {
-				returnValue=int(returnValue);	
+				returnValue=int(returnValue);
 			} else if (returnType==uint) {
 				returnValue=uint(returnValue);
 			} else {
 				returnValue=Number(returnValue);
 			}//else
 			return (returnValue);
-		}//fromBinaryString	
+		}//fromBinaryString
 		
 		/**
 		 * Returns the bit value at a specific position within the input number. 
@@ -969,8 +969,8 @@ package swag.core {
 		 * @see #setBit()
 		 * 		 
 		 */
-		public static function getBit(input:*=null, bitPos:uint=0):Boolean {			
-			if ((!(input is Number)) && (!(input is int)) && (!(input is uint))) {	
+		public static function getBit(input:*=null, bitPos:uint=0):Boolean {
+			if ((!(input is Number)) && (!(input is int)) && (!(input is uint))) {
 				return (undefined);
 			}//if
 			if ((bitPos<1) || (bitPos>32)) {
@@ -998,18 +998,18 @@ package swag.core {
 		 * @see #getBit()
 		 * 		
 		 */
-		public static function setBit(input:*=null, bitPos:uint=0, setValue:Boolean=false):* {			
-			if ((!(input is Number)) && (!(input is int)) && (!(input is uint))) {	
+		public static function setBit(input:*=null, bitPos:uint=0, setValue:Boolean=false):* {
+			if ((!(input is Number)) && (!(input is int)) && (!(input is uint))) {
 				return (undefined);
 			}//if
-			if ((bitPos<1) || (bitPos>32)) {				
+			if ((bitPos<1) || (bitPos>32)) {
 				return (undefined);
 			}//if
-			if (setValue==true) {				
+			if (setValue==true) {
 				input=input | (1 << (bitPos-1));
-			} else {				
+			} else {
 				var tempVal:uint=1;
-				tempVal=~(tempVal << (bitPos-1));			
+				tempVal=~(tempVal << (bitPos-1));
 				input=input & tempVal;
 			}//else
 			return (input);
@@ -1061,7 +1061,7 @@ package swag.core {
 					return (true);
 				} else {
 					return (false);
-				}//else					
+				}//else
 			}//if
 			return (defaultValue);
 		}//toBoolean
@@ -1083,14 +1083,14 @@ package swag.core {
 		public static function sizeWithAspectRatio(target:DisplayObject, targetWidth:Number, targetHeight:Number, scaleBitmap:Boolean=false):DisplayObject {
 			if (target==null) {
 				return (null);
-			}//if	
+			}//if
 			if (target.width>target.height) {
 				var multiplier:Number=targetWidth/target.width;
 				if ((scaleBitmap) && (target is Bitmap)) {
 					var matrix:Matrix = new Matrix();
-					matrix.scale(multiplier, multiplier);					
+					matrix.scale(multiplier, multiplier);
 					var smallBMD:BitmapData = new BitmapData(Bitmap(target).bitmapData.width*multiplier, Bitmap(target).bitmapData.height*multiplier, true, 0x000000);
-					smallBMD.draw(Bitmap(target).bitmapData, matrix, null, null, null, true);					
+					smallBMD.draw(Bitmap(target).bitmapData, matrix, null, null, null, true);
 					var sizedBitmap:Bitmap = new Bitmap(smallBMD, PixelSnapping.NEVER, true);
 					return (sizedBitmap);
 				} else {
@@ -1101,9 +1101,9 @@ package swag.core {
 				multiplier=targetHeight/target.height;
 				if ((scaleBitmap) && (target is Bitmap)) {
 					matrix = new Matrix();
-					matrix.scale(multiplier, multiplier);					
+					matrix.scale(multiplier, multiplier);
 					smallBMD = new BitmapData(Bitmap(target).bitmapData.width*multiplier, Bitmap(target).bitmapData.height*multiplier, true, 0x000000);
-					smallBMD.draw(Bitmap(target).bitmapData, matrix, null, null, null, true);					
+					smallBMD.draw(Bitmap(target).bitmapData, matrix, null, null, null, true);
 					sizedBitmap = new Bitmap(smallBMD, PixelSnapping.NEVER, true);
 					return (sizedBitmap);
 				} else {
@@ -1128,7 +1128,7 @@ package swag.core {
 				var classRef:Class=getDefinitionByName(bitmapClass) as Class;
 				var bmpData:BitmapData=new classRef();
 				var returnBitmap:Bitmap=new Bitmap(bmpData);
-				return (returnBitmap);	
+				return (returnBitmap);
 			} catch (e:*) {
 				return (null);
 			}//catch
@@ -1167,15 +1167,15 @@ package swag.core {
 		 */
 		public static function HTMLDecode(inString:String):String {
 			var localString:String=new String();
-			localString=String(inString);			
+			localString=String(inString);
 			//Typographical / markup / grammatical marks
-			localString=replaceString(localString, String.fromCharCode(34), "&quot;");						
-			localString=replaceString(localString, String.fromCharCode(39), "&apos;");	
+			localString=replaceString(localString, String.fromCharCode(34), "&quot;");
+			localString=replaceString(localString, String.fromCharCode(39), "&apos;");
 			localString=replaceString(localString, String.fromCharCode(60), "&lt;");
 			localString=replaceString(localString, String.fromCharCode(62), "&gt;");
 			localString=replaceString(localString, String.fromCharCode(160), "&nbsp;");
 			localString=replaceString(localString, String.fromCharCode(38), "&amp;");
-			localString=replaceString(localString, String.fromCharCode(166), "&brvbar;");			
+			localString=replaceString(localString, String.fromCharCode(166), "&brvbar;");
 			localString=replaceString(localString, String.fromCharCode(8211), "&ndash;");
 			localString=replaceString(localString, String.fromCharCode(8212), "&mdash;");
 			localString=replaceString(localString, String.fromCharCode(171), "&laquo;");
@@ -1184,7 +1184,7 @@ package swag.core {
 			localString=replaceString(localString, String.fromCharCode(187), "&rsaquo;");
 			localString=replaceString(localString, String.fromCharCode(167), "&sect;");
 			localString=replaceString(localString, String.fromCharCode(182), "&para;");
-			localString=replaceString(localString, String.fromCharCode(8224), "&dagger;");			
+			localString=replaceString(localString, String.fromCharCode(8224), "&dagger;");
 			localString=replaceString(localString, String.fromCharCode(8225), "&Dagger;");
 			localString=replaceString(localString, String.fromCharCode(8226), "&bull;");
 			localString=replaceString(localString, String.fromCharCode(183), "&middot;");
@@ -1196,7 +1196,7 @@ package swag.core {
 			localString=replaceString(localString, String.fromCharCode(174), "&reg;");
 			localString=replaceString(localString, String.fromCharCode(174), "&registered;");
 			localString=replaceString(localString, String.fromCharCode(8482), "&trade;");
-			localString=replaceString(localString, String.fromCharCode(8482), "&trademark;");			
+			localString=replaceString(localString, String.fromCharCode(8482), "&trademark;");
 			//Mathematical marks
 			localString=replaceString(localString, String.fromCharCode(177), "&plusmn;");
 			localString=replaceString(localString, String.fromCharCode(8722), "&minus;");
@@ -1204,7 +1204,7 @@ package swag.core {
 			localString=replaceString(localString, String.fromCharCode(215), "&times;");
 			localString=replaceString(localString, String.fromCharCode(247), "&divide;");
 			localString=replaceString(localString, String.fromCharCode(189), "&frac12;");
-			localString=replaceString(localString, String.fromCharCode(188), "&frac14;");			
+			localString=replaceString(localString, String.fromCharCode(188), "&frac14;");
 			localString=replaceString(localString, String.fromCharCode(190), "&frac34;");
 			localString=replaceString(localString, String.fromCharCode(8734), "&infin;");
 			localString=replaceString(localString, String.fromCharCode(8776), "&asymp;");
@@ -1216,7 +1216,7 @@ package swag.core {
 			localString=replaceString(localString, String.fromCharCode(8730), "&radic;");
 			localString=replaceString(localString, String.fromCharCode(185), "&sup1;");
 			localString=replaceString(localString, String.fromCharCode(178), "&sup2;");
-			localString=replaceString(localString, String.fromCharCode(179), "&sup3;");			
+			localString=replaceString(localString, String.fromCharCode(179), "&sup3;");
 			localString=replaceString(localString, String.fromCharCode(188), "&micro;");
 			localString=replaceString(localString, String.fromCharCode(176), "&deg;");
 			localString=replaceString(localString, String.fromCharCode(8240), "&permil;"); 
@@ -1229,13 +1229,13 @@ package swag.core {
 			localString=replaceString(localString, String.fromCharCode(916), "&Delta;");
 			localString=replaceString(localString, String.fromCharCode(948), "&delta;");
 			localString=replaceString(localString, String.fromCharCode(928), "&Pi;");
-			localString=replaceString(localString, String.fromCharCode(960), "&pi;");	
+			localString=replaceString(localString, String.fromCharCode(960), "&pi;");
 			localString=replaceString(localString, String.fromCharCode(937), "&Omega;");
 			localString=replaceString(localString, String.fromCharCode(969), "&omega;");
 			//Currency symbols
 			localString=replaceString(localString, String.fromCharCode(162), "&cent;");
 			localString=replaceString(localString, String.fromCharCode(163), "&pound;");
-			localString=replaceString(localString, String.fromCharCode(165), "&yen;");			
+			localString=replaceString(localString, String.fromCharCode(165), "&yen;");
 			localString=replaceString(localString, String.fromCharCode(8364), "&euro;");
 			localString=replaceString(localString, String.fromCharCode(164), "&curren;");
 			//One more pass to decode numeric HTML entities
@@ -1261,8 +1261,8 @@ package swag.core {
 		 * <p><strong>Note: Unlike the index values returned by the <code>describeType</code> method, the returned parameter list 
 		 * is 0-indexed (i.e. always 1 less than in the XML description).</strong></p>
 		 * 
-		 */		
-		public static function getMethodParameters(method:Function, container:*):Array {			
+		 */
+		public static function getMethodParameters(method:Function, container:*):Array {
 			if (method==null) {
 				return (null);
 			}//if
@@ -1274,15 +1274,15 @@ package swag.core {
 			if (SwagDataTools.hasData(containerInfo.method)==false) {
 				return (null);
 			}//if
-			var methods:XMLList=containerInfo.method as XMLList;				
+			var methods:XMLList=containerInfo.method as XMLList;
 			for (var count:uint=0; count<methods.length(); count++) {
-				var currentMethodNode:XML=methods[count] as XML;				
+				var currentMethodNode:XML=methods[count] as XML;
 				if (SwagDataTools.hasData(currentMethodNode.@name)) {
-					var methodName:String=new String(currentMethodNode.@name);					
-					if (container[methodName]===method) {						
+					var methodName:String=new String(currentMethodNode.@name);
+					if (container[methodName]===method) {
 						if (SwagDataTools.hasData(currentMethodNode.parameter)) {
 							var parameterIndex:uint=0;
-							var parameterNodes:XMLList=currentMethodNode.parameter as XMLList;							
+							var parameterNodes:XMLList=currentMethodNode.parameter as XMLList;
 							for (var count2:uint=0; count2<parameterNodes.length(); count2++) {
 								var currentParameterNode:XML=parameterNodes[count2] as XML;
 								if (SwagDataTools.hasData(currentParameterNode.@index)) {
@@ -1295,12 +1295,12 @@ package swag.core {
 										returnArray[parameterIndex]=null;
 									} else {
 										try {
-											typeString=SwagDataTools.replaceString(typeString, ".", "::");											
+											typeString=SwagDataTools.replaceString(typeString, ".", "::");
 											var typeClass:Class=getDefinitionByName(typeString) as Class;
 											if (typeClass!=null) {
-												returnArray[parameterIndex]=typeClass;		
+												returnArray[parameterIndex]=typeClass;
 											}//if
-										} catch (e:*) {											
+										} catch (e:*) {
 										}//catch
 									}//else
 								}//if
@@ -1366,7 +1366,7 @@ package swag.core {
 			returnObj.file = String(returnObj.path).substr(String(returnObj.path).lastIndexOf("/")+1);
 			returnObj.path=String(returnObj.path).split(returnObj.file).join("");
 			var paramsStr:String = results.parameters;
-			if(paramsStr!="") {				
+			if(paramsStr!="") {
 				returnObj.parameters = new Object();
 				if(paramsStr.charAt(0) == "?") {
 					paramsStr = paramsStr.substring(1);
