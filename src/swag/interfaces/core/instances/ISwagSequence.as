@@ -6,7 +6,7 @@ package swag.interfaces.core.instances {
 	 */
 	public interface ISwagSequence	{
 		
-		function start():void;
+		function start(startDelay:Number=0):void;
 		function stop():void;
 		function set method(methodSet:Function):void;		
 		function get method():Function;

@@ -406,8 +406,8 @@
 			this._query.text = queryString;					
 			this._query.sqlConnection = this._dbConnection;
 			if (parms!=null) {
-				for (var item in parms) {					
-					this._query.parameters[item]=parms[item];
+				for (var item:* in parms) {					
+					this._query.parameters[item as String]=parms[item];
 				}//for
 			}//if
 			try {

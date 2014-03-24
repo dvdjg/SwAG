@@ -33,7 +33,7 @@ package swag.core.instances {
 		/**
 		 * @private 
 		 */
-		private var _beacon:Number=null;
+		private var _beacon:Number=0;
 		/**
 		 * @private 
 		 */
@@ -77,7 +77,7 @@ package swag.core.instances {
 				this._beaconTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, this.onBeaconTimer);
 				this._beaconTimer=null;
 			}//if
-			if (delay>0) {
+			if (startDelay>0) {
 				this._startDelayTimer=new Timer(startDelay, 1);
 				this._startDelayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, this.startOnDelay);
 				this._startDelayTimer.start();
@@ -153,7 +153,7 @@ package swag.core.instances {
 		 * 
 		 */
 		public function set beacon(beaconSet:Number):void {
-			this._beacon=delaySet;
+			this._beacon=beaconSet;
 		}//set beacon
 		
 		public function get beacon():Number {

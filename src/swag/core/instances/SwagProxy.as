@@ -32,14 +32,14 @@ package swag.core.instances {
 		 *  
 		 * @param proxyMethod The method to be proxied (i.e. the method to temporarily replace with <code>replaceMehod</code>).
 		 * May not be <em>null</em>.
-		 * @param replaceMehod The method that will act as a proxy for <code>proxy</code> method. Ensure that the replacement
+		 * @param replaceMethod The method that will act as a proxy for <code>proxy</code> method. Ensure that the replacement
 		 * method accepts the correct parameters otherwise it may generate a runtime error. May not be <em>null</em>.
 		 * @param proxyContainer The containing object in which the <code>proxyMethod</code> may be found. May not be <em>null</em>.
 		 * @param autoInit If <em>true</em>, the proxy is created right away, otherwise the <code>create</code> method must be called
 		 * manually.
 		 * 
 		 */
-		public function SwagProxy(proxyMethod:Function, proxyContainer:*, replaceMehod:Function, autoInit:Boolean=true)	{
+		public function SwagProxy(proxyMethod:Function, proxyContainer:*, replaceMethod:Function, autoInit:Boolean=true)	{
 			this._proxyMethod=proxyMethod;
 			this._replaceMethod=replaceMethod;
 			this._proxyContainer=proxyContainer;

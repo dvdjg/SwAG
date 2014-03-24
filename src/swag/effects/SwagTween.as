@@ -2,9 +2,9 @@ package swag.effects {
 	
 	import swag.interfaces.effects.ISwagTween;
 	import swag.core.SwagSystem;	
-	import fl.transitions.Tween;
-	import fl.transitions.TweenEvent;
-	import fl.transitions.easing.None;	
+	//import fl.transitions.Tween;
+	//import fl.transitions.TweenEvent;
+	//import fl.transitions.easing.None;	
 
 	/**
 	 * @private

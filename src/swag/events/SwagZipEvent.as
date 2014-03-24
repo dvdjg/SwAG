@@ -49,7 +49,6 @@ package swag.events {
 		 * Default constructor for the class.
 		 *  
 		 * @param eventType The type of event to create.
-		 * @param args Additional arguments to provide to the event. These include:
 		 * <ul>
 		 * <li>parameters (<code>Array</code>) - Optional parameters to pass to the receiving listener. The parameters specified here
 		 * are persistent -- they are maintained while the event object remains active. This allows updated values to be passed to
@@ -58,8 +57,8 @@ package swag.events {
 		 * </ul>
 		 * 
 		 */
-		public function SwagZipEvent(eventType:String=null, ... args) {
-			super(eventType, args);
+		public function SwagZipEvent(eventType:String=null) {
+			super(eventType);
 		}//constructor
 		
 	}//SwagZipEvent class
